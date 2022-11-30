@@ -25,8 +25,8 @@ def register() -> dict:
     import cw2
     module_path_dict["cw2"] = inspect.getfile(cw2)
 
-    # import mp_pytorch
-    # module_path_dict["mp_pytorch"] = inspect.getfile(mp_pytorch)
+    import mp_pytorch
+    module_path_dict["mp_pytorch"] = inspect.getfile(mp_pytorch)
 
     ############################################################################
 

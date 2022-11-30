@@ -30,10 +30,105 @@ When you reproduce your experiment using your latest code and get failure, you c
 - Auto checkout to certain branches to recover your code bases to the latest state. 
 
 # Usage 
-- Make sure the repositories are installed through: 
+- Make sure the repositories are installed through pip, Here -e means your code base is in editable mode: 
 
 ```bash 
 pip install -e .
 ```
-Here -e means your code base is in editable mode. 
 
+- Register your repositories as python packages (see demo/quick_start.py), e.g.:
+
+```python 
+
+def register() -> dict:
+    """
+    Get pre-registered modules' repository path
+
+    Returns:
+        path to the repositories
+
+    """
+    module_path_dict = dict()
+    repo_path_dict = dict()
+
+    ############################################################################
+    
+    import cw2
+    module_path_dict["cw2"] = inspect.getfile(cw2)
+
+    import mp_pytorch
+    module_path_dict["mp_pytorch"] = inspect.getfile(mp_pytorch)    
+    
+    ############################################################################
+    
+    # Keep these following codes unchanged
+    for module_name, path in module_path_dict.items():
+        if "site-packages" in path:
+            raise RuntimeError(f"Module {module_name} is in site_packages, "
+                               f"thus cannot track its repository.")
+        repo_path_dict[module_name] = util.dir_go_up(num_level=2,
+                                                     current_file_dir=path)
+
+    return repo_path_dict
+```
+
+- Use this register function to instantiate a tracker
+
+```python
+tracker = git_repos_tracker.tracker.GitReposTracker(register_func=register)
+```
+
+- Run it before you run your experiment code in the main function
+
+```python
+is_clean, repo_status_dict = tracker.check_clean_git_status(print_result=True)
+```
+
+- You will see some details of your repos:
+```bash
+************************************************************
+*                Current repository status                 *
+************************************************************
+
+
+====================== cw2: Dirty !!! ======================
+
+path: /home/lige/Codes/Git_Repos_Tracker/test_repos/cw2
+branch: master
+num_staged: 0
+num_modified: 1
+num_untracked: 0
+
+================== mp_pytorch: Dirty !!! ===================
+
+path: /home/lige/Codes/Git_Repos_Tracker/test_repos/MP_PyTorch
+branch: main
+num_staged: 0
+num_modified: 1
+num_untracked: 0
+
+============ End of checking repository status =============
+```
+
+- You can enforce all repos to be clean and give tolerance to debugging mode:
+
+```python 
+if not util.is_debugging() and not is_clean:
+    raise RuntimeError("I am running but I am not clean.")
+
+else:
+    # Run your experiment
+    my_cool_experiment()
+    print("my experiment is running...")
+```
+
+- You can log or print the commits code returned by a dictionary
+```python
+print(tracker.get_git_repo_commits())
+```
+
+- You will get:
+```bash
+{'cw2': '15b52480fc6fac3e6f094dd29f4348c9eb163c50', 
+ 'mp_pytorch': '5b6d012890c28d20c884b38208ee43d330dac249'}
+```
