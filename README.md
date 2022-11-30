@@ -8,7 +8,7 @@ Have you ever experienced a problem like:
 
 "I am not sure where is the bug, it can be either in my RL code or in the RL environment or in Donald Trump's code."
 
-"Damn, I have already spent one week to locate the bug, but still have no idea where is the problem. And each of the debuting experiment will take me half a day." 
+"Damn, I have already spent one week to locate the bug, but still have no idea where is the problem. And each of the debuging experiment will take me half a day." 
 
 "Finally, I found the problem. My code is fine, but my colleague updated their code version, then my experiment cannot work anymore."
 
