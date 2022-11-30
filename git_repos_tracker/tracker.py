@@ -86,7 +86,7 @@ class GitReposTracker:
 
             repo_status_dict[repo_name] = repo_status
         if print_result:
-            print_repo_status(repo_status_dict)
+            self.print_repo_status(repo_status_dict)
 
         return is_clean, repo_status_dict
 
