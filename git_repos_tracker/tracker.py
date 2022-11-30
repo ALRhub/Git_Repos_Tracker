@@ -7,7 +7,6 @@ from git import Repo
 import git_repos_tracker.util as util
 
 
-
 class GitReposTracker:
     def __init__(self, register_func):
         self.repo_path_dict = register_func()

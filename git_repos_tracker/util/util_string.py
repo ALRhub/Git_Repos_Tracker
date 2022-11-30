@@ -2,7 +2,6 @@
     Utilities of string operation and printing stuff
 """
 from datetime import datetime
-from tabulate import tabulate
 
 
 def print_line(char: str = "=", length: int = 60,
@@ -83,27 +82,6 @@ def print_wrap_title(title: str = "", char: str = "*", length: int = 60,
         print(char, " " * (length - 2), char, sep="")
     print_line(char=char, length=length, after=after)
     # End of function print_wrap_title
-
-
-def print_table(tabular_data: list, headers: list,
-                table_format: str = "grid") -> None:
-    """
-    Print nice table in using tabulate
-
-    Example:
-    print_table(tabular_data=[["value1", "value2"], ["value3", "value4"]],
-               headers=["headers 1", "headers 2"],
-               table_format="grid"))
-
-    Args:
-        tabular_data: data in table
-        headers: column headers
-        table_format: format
-
-    Returns:
-
-    """
-    print(tabulate(tabular_data, headers, table_format))
 
 
 def get_formatted_date_time() -> str:
