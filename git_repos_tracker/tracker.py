@@ -27,7 +27,7 @@ class GitReposTracker:
                     if status_key != "clean":
                         print(f"{status_key}: {status_value}")
 
-        util.print_line_title("End of checking repository status")
+        util.print_wrap_title("End of checking repository status")
 
     def check_clean_git_status(self,
                                check_untracked: bool = True,
