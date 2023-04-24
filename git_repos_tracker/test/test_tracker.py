@@ -15,7 +15,7 @@ def test_get_git_repo_paths():
 def test_print_repo_status(tracker: GitReposTracker):
     util.print_wrap_title("test_print_repo_status")
     is_clean, repo_status_dict = tracker.check_clean_git_status(True)
-    tracker.print_repo_status(repo_status_dict)
+    tracker.print_repo_status(repo_status_dict, tracker.get_git_repo_commits())
 
 
 def test_check_clean_git_status(tracker: GitReposTracker):

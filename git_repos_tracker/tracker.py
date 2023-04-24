@@ -12,13 +12,14 @@ class GitReposTracker:
         self.repo_path_dict = register_func()
 
     @staticmethod
-    def print_repo_status(git_status: dict):
+    def print_repo_status(git_status: dict, git_commits: dict):
         util.print_wrap_title("Current repository status")
         for repo_key, repo_status in git_status.items():
             if repo_status["clean"]:
                 is_clean = ": Clean"
                 util.print_line_title(repo_key + is_clean)
                 print(f"branch: {repo_status['branch']}")
+                print(f"commit: {git_commits[repo_key]}")
             else:
                 is_clean = ": Dirty !!!"
                 util.print_line_title(repo_key + is_clean)
@@ -86,7 +87,8 @@ class GitReposTracker:
 
             repo_status_dict[repo_name] = repo_status
         if print_result:
-            self.print_repo_status(repo_status_dict)
+            self.print_repo_status(repo_status_dict,
+                                   self.get_git_repo_commits())
 
         return is_clean, repo_status_dict
 
